@@ -19,17 +19,20 @@ class PhoneBook extends Component {
   };
 
   static propTypes = {
-    btnText: PropTypes.string
+    btnText: PropTypes.string,
   };
 
-  componentDidMount(){
-    this.setState({
-      contacts: JSON.parse(localStorage.getItem("contacts"))
-    })
+  componentDidMount() {
+    const DataStorage = JSON.parse(localStorage.getItem("contacts"));
+    if (DataStorage) {
+      return this.setState({
+        contacts: DataStorage,
+      });
+    }
   }
 
-  componentDidUpdate(){
-    localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
+  componentDidUpdate() {
+    localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
   }
 
   verifyData = () => {
@@ -82,7 +85,8 @@ class PhoneBook extends Component {
   render() {
     const { btnText } = this.props;
     const { name, contacts, number, filter } = this.state;
-    const { input_form, form_add_contact, label_form, submit_btn, title_list } = styles;
+    const { input_form, form_add_contact, label_form, submit_btn, title_list } =
+      styles;
 
     const normalizedFilterArray = filter.toLowerCase();
     const filteredArray = contacts.filter((item) =>
@@ -118,7 +122,9 @@ class PhoneBook extends Component {
               required
             />
           </label>
-          <button className={submit_btn} type="submit">{btnText}</button>
+          <button className={submit_btn} type="submit">
+            {btnText}
+          </button>
         </form>
         <h2 className={title_list}>Contacts</h2>
         <div>
